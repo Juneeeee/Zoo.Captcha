@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="row">
+    <img id="captcha" src="" />
+    <a href="javascript:flush()" class="btn"><i class="glyphicon glyphicon-flash"></i>刷新</a>
+
+    <div class="btn-group">
+        <input type="text" class="form-control" id="code" />
+        <input type="hidden" id="id" />
+        <a class="btn btn-default" href="javascript:validate()">提交</a>
+    </div>
+</div>
+@section Scripts{
+    <script type="text/javascript">
+        window.onload = flush();
+        function flush() {
+            $.get("@Url.Action("CreateToken", "Home")", function (res) {
+                $("#captcha").attr("src", "@Url.Action("Captcha","Home")?id=" + res);
+                $("#id").val( res);
+             });
+        }
+        function validate() { 
+            var code = $("#code").val();
+            var id = $("#id").val();
+
+            $.post("@Url.Action("Validate", "Home")", { id: id, code: code }, function (res) {
+                alert(res);
+                flush();
+             });
+        }
+    </script>
+}
