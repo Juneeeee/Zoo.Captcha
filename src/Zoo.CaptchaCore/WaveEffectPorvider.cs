@@ -13,7 +13,6 @@ namespace Zoo.CaptchaCore
             int h = image.Height;
 
             // 透过公式进行水波纹的採样 
-            PointF[,] fp = new PointF[w, h];
             Point[,] pt = new Point[w, h];
 
             Point mid = new Point();
@@ -28,32 +27,28 @@ namespace Zoo.CaptchaCore
             {
                 for (int y = 0; y < h; ++y)
                 {
-                    xo = ((double)nWave * Math.Sin(2.0 * 3.1415 * (float)y / 128.0));
-                    yo = ((double)nWave * Math.Cos(2.0 * 3.1415 * (float)x / 128.0));
+                    xo = (nWave * Math.Sin(2.0 * Math.PI * (float)y / 120.0));
+                    yo = (nWave * Math.Cos(2.0 * Math.PI * (float)x / 120.0));
 
                     newX = (x + xo);
                     newY = (y + yo);
 
                     if (newX > 0 && newX < w)
                     {
-                        fp[x, y].X = (float)newX;
-                        pt[x, y].X = (int)newX;
+                        pt[x, y].X = (int)Math.Round(newX, 0);
                     }
                     else
                     {
-                        fp[x, y].X = (float)0.0;
                         pt[x, y].X = 0;
                     }
 
 
                     if (newY > 0 && newY < h)
                     {
-                        fp[x, y].Y = (float)newY;
-                        pt[x, y].Y = (int)newY;
+                        pt[x, y].Y = (int)Math.Round(newY, 0);
                     }
                     else
                     {
-                        fp[x, y].Y = (float)0.0;
                         pt[x, y].Y = 0;
                     }
                 }
@@ -100,7 +95,7 @@ namespace Zoo.CaptchaCore
             }
 
             image.UnlockBits(bitmapData);
-            bSrc.UnlockBits(bmSrc); 
+            bSrc.UnlockBits(bmSrc);
         }
     }
 }
