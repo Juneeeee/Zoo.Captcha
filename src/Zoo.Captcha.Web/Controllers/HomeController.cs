@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Zoo.Captcha.Web.Models;
 using Zoo.CaptchaCore;
 
@@ -35,7 +35,8 @@ namespace Zoo.Captcha.Web.Controllers
         {
             var captcha = _captchaProvider.CreateCaptcha();
             return Json(captcha.Id);
-        } 
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

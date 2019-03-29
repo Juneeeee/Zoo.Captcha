@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Zoo.Captcha.Web.Controllers
 {
@@ -31,8 +27,8 @@ namespace Zoo.Captcha.Web.Controllers
 
             // Draw the path to screen.
             g.DrawPath(new Pen(Color.Red, 2), myPath);
-           
-           
+
+
 
             MemoryStream stream = new MemoryStream();
             image.Save(stream, ImageFormat.Png);

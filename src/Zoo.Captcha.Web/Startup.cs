@@ -31,8 +31,7 @@ namespace Zoo.Captcha.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddTransient<IEffectPorvider, WaveEffectPorvider>();
-            services.AddTransient<ICaptchaPainter, DefaultCaptchaPainter>();
+
             services.AddSingleton<ICaptchaStore, MemoryCaptchaStore>();
             services.AddTransient<ICodeProvider, DefaultCodeProvider>();
             services.AddTransient<ICaptchaProvider, DefaultCaptchaProvider>();

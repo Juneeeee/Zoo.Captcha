@@ -24,5 +24,9 @@ namespace Zoo.CaptchaCore
         {
             return _random.Next(minValue, maxValue);
         }
+        public static double ToDouble()
+        {
+            return _random.NextDouble();
+        }
     }
 }

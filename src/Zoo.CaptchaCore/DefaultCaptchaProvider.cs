@@ -8,20 +8,21 @@
     }
     public class DefaultCaptchaProvider : ICaptchaProvider
     {
-        private readonly ICaptchaPainter _captchaPainter;
         private readonly ICodeProvider _codeProvider;
         private readonly ICaptchaStore _captchaStore;
-        public DefaultCaptchaProvider(ICaptchaPainter captchaPainter, ICaptchaStore captchaStore,
+        public DefaultCaptchaProvider(ICaptchaStore captchaStore,
             ICodeProvider codeProvider)
         {
-            _captchaPainter = captchaPainter;
             _codeProvider = codeProvider;
             _captchaStore = captchaStore;
         }
         public Captcha CreateCaptcha()
         {
             var code = _codeProvider.Generate();
-            var captcha = _captchaPainter.Paint(code);
+
+
+            IGraphicsStrategy graphicsStrategy = GraphicsStrategyManager.Instance.GetRandomStrategy();
+            var captcha = graphicsStrategy.Drawing(code, 216, 96);
 
             //存储验证码 
             _captchaStore.Add(captcha);
