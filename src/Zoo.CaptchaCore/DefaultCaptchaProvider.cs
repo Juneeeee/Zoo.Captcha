@@ -1,4 +1,6 @@
-﻿namespace Zoo.CaptchaCore
+﻿using Zoo.CaptchaCore.GraphicsStrategies;
+
+namespace Zoo.CaptchaCore
 {
     public interface ICaptchaProvider
     {
