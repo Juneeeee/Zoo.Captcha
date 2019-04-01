@@ -70,7 +70,7 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
 
         public void Effect(Bitmap image)
         {
-            int factor = RandomUtils.ToNumber(0, 10);
+            int factor = RandomUtils.ToNumber(3, 10);
             int w = image.Width;
             int h = image.Height;
 

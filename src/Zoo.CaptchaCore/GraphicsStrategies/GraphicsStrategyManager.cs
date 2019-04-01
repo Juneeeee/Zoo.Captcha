@@ -11,7 +11,7 @@
         public GraphicsStrategyBase GetRandomStrategy()
         {
 
-            return new AGraphicsStrategy();
+            return new BGraphicsStrategy();
 
         }
     }

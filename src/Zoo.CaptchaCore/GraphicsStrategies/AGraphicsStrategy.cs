@@ -53,29 +53,29 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
                         {
                             if (i == 0)
                             {
-                                int maxToLeft = width - firstLineCharsWidth - 10;//距离左侧最大X坐标
+                                int maxToLeft = (width - firstLineCharsWidth)/2;//距离左侧最大X坐标
                                 rectangles[i].X = RandomUtils.ToNumber(0, maxToLeft);
                             }
                             else
                                 rectangles[i].X = rectangles[i - 1].X + rectangles[i - 1].Width;
-                            rectangles[i].Y = -10;
+                            rectangles[i].Y = -5;
                         }
                         else
                         {
                             if (i == firstLineCount)
                             {
-                                int maxToLeft = width - secondLineCharsWidth - 10;//距离左侧最大X坐标
+                                int maxToLeft = (width - firstLineCharsWidth) / 2;//距离左侧最大X坐标
                                 rectangles[i].X = RandomUtils.ToNumber(0, maxToLeft);
                             }
                             else
                                 rectangles[i].X = rectangles[i - 1].X + rectangles[i - 1].Width;
-                            rectangles[i].Y = 30;
+                            rectangles[i].Y = 35;
                         }
                         var matrix = new Matrix();
                         matrix.Translate(rectangles[i].X, rectangles[i].Y);
                         var path = transformData.Path;
                         path.Transform(matrix);
-                        g.DrawPath(new Pen(Color.FromArgb(133, 127, 166), 2.0f), path);
+                        g.DrawPath(new Pen(Color.FromArgb(133, 127, 166), 1.7f), path);
                     }
                     //写入数据流
                     MemoryStream stream = new MemoryStream();
@@ -91,13 +91,21 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
             using (var path = new GraphicsPath())
             {
                 //以(0,0)绘制字体，通过散布的坐标点获取该字体的宽高
-                path.AddString(c, fontFamily, (int)FontStyle.Bold, 60, new PointF(0, 0), StringFormat.GenericTypographic);
-                var property = GetCharProperty(path.PathPoints);
+                path.AddString(c, fontFamily, (int)FontStyle.Bold,50, new PointF(0, 0), StringFormat.GenericTypographic);
+                var rectangle = CalculateSingleCharRectangle(path.PathPoints);
 
-                var xAmp = property.Width * 0.03;
-                var yAmp = property.Height * 0.06;
-                var xFreq = 2d * Math.PI / property.Width;
-                var yFreq = 2d * Math.PI / property.Height;
+                Matrix m = new Matrix();
+                //随机旋转
+                var angleValue = RandomUtils.ToNumber(-20, 20);
+               
+                m.RotateAt(angleValue, new Point(rectangle.Width / 2, rectangle.Height / 2));
+                path.Transform(m);
+
+
+                var xAmp = rectangle.Width * 0.03;
+                var yAmp = rectangle.Height * 0.06;
+                var xFreq = 2d * Math.PI / rectangle.Width;
+                var yFreq = 2d * Math.PI / rectangle.Height;
                 var points = new PointF[path.PathPoints.Length];
                 var xSeed = RandomUtils.ToDouble() * 2 * Math.PI;
                 var ySeed = RandomUtils.ToDouble() * 2 * Math.PI;
@@ -109,12 +117,15 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
                     var yOffset = (int)(yAmp * Math.Sin(val + ySeed));
                     points[i++] = new PointF(original.X + xOffset, original.Y + yOffset);
                 }
+
+                rectangle = CalculateSingleCharRectangle(path.PathPoints);
+
                 var newPath = new GraphicsPath(points, path.PathTypes);
 
-                return new TransformData(newPath, property);
+                return new TransformData(newPath, rectangle);
             }
         }
-        private Rectangle GetCharProperty(PointF[] points)
+        private Rectangle CalculateSingleCharRectangle(PointF[] points)
         {
             float w = 0, h = 0;
             for (int i = 0; i < points.Length - 1; i++)

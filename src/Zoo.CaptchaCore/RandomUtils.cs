@@ -12,7 +12,7 @@ namespace Zoo.CaptchaCore
         }
         public static string ToChars(int length)
         {
-            var seeds = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"; 
+            var seeds = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < length; i++)
             {
@@ -27,6 +27,10 @@ namespace Zoo.CaptchaCore
         public static double ToDouble()
         {
             return _random.NextDouble();
+        }
+        public static bool ToBoolean()
+        {
+            return _random.NextDouble() > 0.5;
         }
     }
 }
