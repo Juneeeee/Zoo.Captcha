@@ -1,6 +1,6 @@
 ﻿namespace Zoo.CaptchaCore
 {
-    public interface IGraphicsStrategy
+    public interface IGraphicsProvider
     {
         Captcha Drawing(string code, int width, int height);
     }

@@ -39,7 +39,8 @@ namespace Zoo.Captcha.Web
 
             services.AddSingleton<ICaptchaStore, MemoryCaptchaStore>(); 
             services.AddTransient<ICaptchaService, CaptchaService>();
-            services.AddTransient<IGraphicsStrategy, DefaultGraphicsStrategy>();
+            services.AddTransient<IGraphicsProvider, DefaultGraphicsProvider>();
+            services.AddSingleton<IRandomProvider, DefaultRandomProvider>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -11,9 +11,7 @@ using Zoo.CaptchaCore;
 namespace Zoo.Captcha.Web.Controllers
 {
     public class Examples04Controller : Controller
-    {
-        private int yo;
-
+    { 
         public IActionResult Index()
         {
             // 创建位图

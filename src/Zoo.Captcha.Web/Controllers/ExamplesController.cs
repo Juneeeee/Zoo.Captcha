@@ -83,9 +83,7 @@ namespace Zoo.Captcha.Web.Controllers
                     GraphicsPath path = new GraphicsPath(FillMode.Alternate);
                     path.AddString("A", new FontFamily("Consolas"), (int)FontStyle.Bold, 50, new Point(0, 0), StringFormat.GenericTypographic);
 
-                     
-                    var factor = 10;
-                    
+                      
 
                     MemoryStream stream = new MemoryStream();
                     image.Save(stream, ImageFormat.Png);

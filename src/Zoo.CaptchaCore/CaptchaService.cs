@@ -5,12 +5,15 @@ namespace Zoo.CaptchaCore
     public class CaptchaService: ICaptchaService
     {
         private readonly ICaptchaStore _captchaStore;
-        private readonly IGraphicsStrategy _graphicsStrategy;
+        private readonly IGraphicsProvider _graphicsStrategy;
+        private readonly IRandomProvider _randomProvider;
         public CaptchaService(ICaptchaStore captchaStore,
-            IGraphicsStrategy graphicsStrategy)
+            IGraphicsProvider graphicsStrategy,
+            IRandomProvider randomProvider)
         {
             _captchaStore = captchaStore;
             _graphicsStrategy = graphicsStrategy;
+            _randomProvider = randomProvider;
         }
 
         public Captcha CreateCaptcha(int imgWidth, int imgHeight, int minCharsLength, int maxCharsLength)
@@ -27,8 +30,8 @@ namespace Zoo.CaptchaCore
                 throw new ArgumentException("随机最多字符长度不能少于最少字符长度");
 
 
-            var length = RandomUtils.ToNumber(minCharsLength, maxCharsLength);
-            var code = RandomUtils.ToChars(length);
+            var length = _randomProvider.ToNumber(minCharsLength, maxCharsLength);
+            var code = _randomProvider.ToChars(length);
             var captcha = _graphicsStrategy.Drawing(code, imgWidth, imgHeight);
 
             //存储验证码 
