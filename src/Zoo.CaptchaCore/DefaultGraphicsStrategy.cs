@@ -3,13 +3,18 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 
-namespace Zoo.CaptchaCore.GraphicsStrategies
+namespace Zoo.CaptchaCore
 {
-
-    public class AGraphicsStrategy : GraphicsStrategyBase
+    public class DefaultGraphicsStrategy : IGraphicsStrategy
     {
-        public override Captcha Drawing(string code, int width, int height)
+        //private ILog log;
+        public DefaultGraphicsStrategy()
+        {
+            //log = LogManager.GetLogger("NETCoreRepository", typeof(AGraphicsStrategy));
+        }
+        public Captcha Drawing(string code, int width, int height)
         {
             using (Bitmap image = new Bitmap(width, height))
             {
@@ -18,8 +23,8 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
                     g.Clear(Color.FromArgb(254, 248, 248));
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                     //生成随机字符
-                    var length = RandomUtils.ToNumber(7, 10);
-                    var chars = RandomUtils.ToChars(length);
+                    var length = 7;// RandomUtils.ToNumber(7, 10);
+                    var chars = "aBcdEfG";// RandomUtils.ToChars(length);
 
                     var fontFamily = new FontFamily("Arial");
                     //所有字体绘制信息
@@ -53,12 +58,12 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
                         {
                             if (i == 0)
                             {
-                                int maxToLeft = (width - firstLineCharsWidth)/2;//距离左侧最大X坐标
+                                int maxToLeft = (width - firstLineCharsWidth) / 2;//距离左侧最大X坐标
                                 rectangles[i].X = RandomUtils.ToNumber(0, maxToLeft);
                             }
                             else
                                 rectangles[i].X = rectangles[i - 1].X + rectangles[i - 1].Width;
-                            rectangles[i].Y = -5;
+                            rectangles[i].Y = 5;
                         }
                         else
                         {
@@ -69,14 +74,24 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
                             }
                             else
                                 rectangles[i].X = rectangles[i - 1].X + rectangles[i - 1].Width;
-                            rectangles[i].Y = 35;
+                            rectangles[i].Y = 40;
                         }
                         var matrix = new Matrix();
-                        matrix.Translate(rectangles[i].X, rectangles[i].Y);
+                        matrix.Translate(rectangles[i].X, rectangles[i].Y - 8);
                         var path = transformData.Path;
                         path.Transform(matrix);
                         g.DrawPath(new Pen(Color.FromArgb(133, 127, 166), 1.7f), path);
+                        g.DrawRectangle(new Pen(Color.Blue), rectangles[i]);
+                        Log(i, path.PathPoints, rectangles[i]);
                     }
+                    //var transform = Transform("B", fontFamily);
+                    //var matrix = new Matrix();
+                    //matrix.Translate(52, 40 - 8);
+                    //var path = transform.Path;
+                    //path.Transform(matrix);
+                    //g.DrawPath(new Pen(Color.FromArgb(133, 127, 166), 1.7f), path);
+                    //g.DrawRectangle(new Pen(Color.Blue), new Rectangle(56, 40, 30, 39));
+
                     //写入数据流
                     MemoryStream stream = new MemoryStream();
                     image.Save(stream, ImageFormat.Png);
@@ -91,15 +106,15 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
             using (var path = new GraphicsPath())
             {
                 //以(0,0)绘制字体，通过散布的坐标点获取该字体的宽高
-                path.AddString(c, fontFamily, (int)FontStyle.Bold,50, new PointF(0, 0), StringFormat.GenericTypographic);
+                path.AddString(c, fontFamily, (int)FontStyle.Bold, 50, new PointF(0, 0), StringFormat.GenericTypographic);
                 var rectangle = CalculateSingleCharRectangle(path.PathPoints);
 
-                Matrix m = new Matrix();
-                //随机旋转
-                var angleValue = RandomUtils.ToNumber(-20, 20);
-               
-                m.RotateAt(angleValue, new Point(rectangle.Width / 2, rectangle.Height / 2));
-                path.Transform(m);
+                //Matrix m = new Matrix();
+                ////随机旋转
+                //var angleValue = RandomUtils.ToNumber(-20, 20);
+
+                //m.RotateAt(angleValue, new Point(rectangle.Width / 2, rectangle.Height / 2));
+                //path.Transform(m);
 
 
                 var xAmp = rectangle.Width * 0.03;
@@ -118,7 +133,7 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
                     points[i++] = new PointF(original.X + xOffset, original.Y + yOffset);
                 }
 
-                rectangle = CalculateSingleCharRectangle(path.PathPoints);
+                rectangle = CalculateSingleCharRectangle(points);
 
                 var newPath = new GraphicsPath(points, path.PathTypes);
 
@@ -155,6 +170,16 @@ namespace Zoo.CaptchaCore.GraphicsStrategies
 
         }
 
-    }
+        private void Log(int i, PointF[] points, Rectangle rectangle)
+        {
+            StringBuilder builder = new StringBuilder();
+            foreach (var point in points)
+            {
+                builder.Append($"x:{point.X},y:{point.Y}\r\n");
+            }
 
+            //log.Debug($@"{i} Rectangle[x:{rectangle.X},y:{rectangle.Y},width:{rectangle.Width},height:{rectangle.Height}] Points:{builder.ToString()}");
+        }
+
+    }
 }

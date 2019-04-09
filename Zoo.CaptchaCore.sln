@@ -5,13 +5,13 @@ VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{FD3E4480-8543-40E9-A989-B7BA93B6C15C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zoo.CaptchaCore", "src\Zoo.CaptchaCore\Zoo.CaptchaCore.csproj", "{150DC99C-65DD-409D-813B-E604E812DF02}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A9E4781B-3632-4BFB-A7B4-6D6855C671D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zoo.CaptchaCore.Tests", "tests\Zoo.CaptchaCore.Tests\Zoo.CaptchaCore.Tests.csproj", "{D50AE913-7F4F-4C8E-9FA8-DC71DCE55121}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zoo.Captcha.Web", "src\Zoo.Captcha.Web\Zoo.Captcha.Web.csproj", "{CAF41D27-DCDE-457F-8F59-BECF0D850CA2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zoo.CaptchaCore", "src\Zoo.CaptchaCore\Zoo.CaptchaCore.csproj", "{532FBE60-A217-4CFB-813D-77D589D3DBD2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{150DC99C-65DD-409D-813B-E604E812DF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{150DC99C-65DD-409D-813B-E604E812DF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{150DC99C-65DD-409D-813B-E604E812DF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{150DC99C-65DD-409D-813B-E604E812DF02}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D50AE913-7F4F-4C8E-9FA8-DC71DCE55121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D50AE913-7F4F-4C8E-9FA8-DC71DCE55121}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D50AE913-7F4F-4C8E-9FA8-DC71DCE55121}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -31,14 +27,18 @@ Global
 		{CAF41D27-DCDE-457F-8F59-BECF0D850CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CAF41D27-DCDE-457F-8F59-BECF0D850CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAF41D27-DCDE-457F-8F59-BECF0D850CA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{532FBE60-A217-4CFB-813D-77D589D3DBD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{532FBE60-A217-4CFB-813D-77D589D3DBD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{532FBE60-A217-4CFB-813D-77D589D3DBD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{532FBE60-A217-4CFB-813D-77D589D3DBD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{150DC99C-65DD-409D-813B-E604E812DF02} = {FD3E4480-8543-40E9-A989-B7BA93B6C15C}
 		{D50AE913-7F4F-4C8E-9FA8-DC71DCE55121} = {A9E4781B-3632-4BFB-A7B4-6D6855C671D1}
 		{CAF41D27-DCDE-457F-8F59-BECF0D850CA2} = {FD3E4480-8543-40E9-A989-B7BA93B6C15C}
+		{532FBE60-A217-4CFB-813D-77D589D3DBD2} = {FD3E4480-8543-40E9-A989-B7BA93B6C15C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4ACBE380-4C65-4936-B44C-1CBBF6B72CB2}

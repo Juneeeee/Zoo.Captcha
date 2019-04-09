@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Zoo.CaptchaCore
@@ -14,10 +15,8 @@ namespace Zoo.CaptchaCore
         {
             var seeds = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < length; i++)
-            {
-                builder.Append(seeds[_random.Next(0, seeds.Length)]);
-            }
+            for (int i = 0; i < length; i++) 
+                builder.Append(seeds[_random.Next(0, seeds.Length)]); 
             return builder.ToString();
         }
         public static int ToNumber(int minValue, int maxValue)
@@ -27,10 +26,6 @@ namespace Zoo.CaptchaCore
         public static double ToDouble()
         {
             return _random.NextDouble();
-        }
-        public static bool ToBoolean()
-        {
-            return _random.NextDouble() > 0.5;
         }
     }
 }

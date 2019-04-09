@@ -9,12 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="GraphicsStrategy.cs" />
-    <Compile Remove="IEffectPorvider.cs" />
-    <Compile Remove="WaveEffectPorvider.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
   </ItemGroup>
 

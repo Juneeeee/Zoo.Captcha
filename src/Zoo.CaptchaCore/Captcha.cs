@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Zoo.CaptchaCore
 {
     public class Captcha
     {
-        public Captcha(string code,byte[] data,string contentType)
+        public Captcha(string code, byte[] data, string contentType)
         {
             Id = Guid.NewGuid().ToString("n");
             Code = code;
@@ -15,7 +13,7 @@ namespace Zoo.CaptchaCore
         }
         public string Id { get; }
         public byte[] Data { get; }
-        public string ContentType { get;  }
+        public string ContentType { get; }
         public string Code { get; }
     }
 }

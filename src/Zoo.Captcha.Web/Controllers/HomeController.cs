@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Zoo.Captcha.Web.Models;
 using Zoo.CaptchaCore;
 
@@ -11,10 +7,10 @@ namespace Zoo.Captcha.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICaptchaProvider _captchaProvider;
-        public HomeController(ICaptchaProvider captchaProvider)
+        private readonly ICaptchaService _captchaService;
+        public HomeController(ICaptchaService captchaService)
         {
-            _captchaProvider = captchaProvider;
+            _captchaService = captchaService;
         }
         public IActionResult Index()
         {
@@ -22,18 +18,19 @@ namespace Zoo.Captcha.Web.Controllers
         }
         public IActionResult Captcha(string id)
         {
-            var captcha = _captchaProvider.GetCaptcha(id);
+
+            var captcha = _captchaService.FindCaptcha(id);
             return File(captcha.Data, captcha.ContentType);
 
         }
         public IActionResult Validate(string id, string code)
         {
-            var result = _captchaProvider.Validate(id, code);
+            var result = _captchaService.Validate(id, code);
             return Json(result);
         }
         public IActionResult CreateToken()
         {
-            var captcha = _captchaProvider.CreateCaptcha();
+            var captcha = _captchaService.CreateCaptcha(216, 96, 7, 10);
             return Json(captcha.Id);
         }
 

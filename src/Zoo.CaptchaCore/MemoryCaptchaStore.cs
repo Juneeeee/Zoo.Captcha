@@ -2,11 +2,6 @@
 
 namespace Zoo.CaptchaCore
 {
-    public interface ICaptchaStore
-    {
-        void Add(Captcha captcha);
-        Captcha Get(string id);
-    }
     public class MemoryCaptchaStore : ICaptchaStore
     {
         public static IDictionary<string, Captcha> dictionary = new Dictionary<string, Captcha>();
