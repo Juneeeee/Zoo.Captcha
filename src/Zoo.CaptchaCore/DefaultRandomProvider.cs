@@ -12,7 +12,7 @@ namespace Zoo.CaptchaCore
         }
         public string ToChars(int length)
         {
-            var seeds = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefhijklmnorstuvwxz0123456789";
+            var seeds = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < length; i++)
                 builder.Append(seeds[_random.Next(0, seeds.Length)]);
