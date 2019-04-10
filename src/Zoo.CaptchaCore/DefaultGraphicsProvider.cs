@@ -17,31 +17,28 @@ namespace Zoo.CaptchaCore
             log = LogManager.GetLogger("NETCoreRepository", typeof(DefaultGraphicsProvider));
             _randomProvider = randomProvider;
         }
-        public Captcha Drawing(string code, int width, int height)
+        public Captcha Drawing(string code, int width, int height, int length, string fontColor, string backgroundColor)
         {
-
-
-            var length = _randomProvider.ToNumber(7, 10);
+             
             var chars = _randomProvider.ToChars(length);
-
 
             using (Bitmap image = new Bitmap(width, height))
             {
                 using (Graphics g = Graphics.FromImage(image))
                 {
-                    g.Clear(Color.FromArgb(243, 241, 241));
+                    g.Clear(ColorTranslator.FromHtml(backgroundColor));
                     g.SmoothingMode = SmoothingMode.AntiAlias;
                     g.SmoothingMode = SmoothingMode.HighQuality;
                     g.CompositingQuality = CompositingQuality.HighQuality;
                     g.InterpolationMode = InterpolationMode.High;
                     g.TextRenderingHint = TextRenderingHint.AntiAlias;
+                    g.PixelOffsetMode = PixelOffsetMode.HighSpeed;
                     var fontFamily = new FontFamily("Arial");
-                    var pen = new Pen(Color.Red);
-                    var pen2 = new Pen(Color.Black);
-
+                    var pen = new Pen(ColorTranslator.FromHtml(fontColor));
+                     
                     var ch = new Chars();
                     string c;
-                    int toLeft = 10, toTop = 5, maxHeight = 0;
+                    int toLeft = 10, toTop = 15;
                     int perLineCount = length / 2;
                     for (int i = 0; i < length; i++)
                     {
@@ -50,21 +47,21 @@ namespace Zoo.CaptchaCore
                         using (GraphicsPath path = new GraphicsPath(FillMode.Alternate))
                         {
                             path.AddString(c, fontFamily, (int)FontStyle.Regular, 50, new Point(toLeft + rectangle.X, toTop + rectangle.Y), StringFormat.GenericTypographic);
-                            g.DrawPath(pen, path);
-                            //g.DrawRectangle(pen2, new Rectangle(toLeft, toTop, rectangle.Width, rectangle.Height));
+                            g.DrawPath(pen, path); 
                         }
-                        if (maxHeight < rectangle.Height)
-                            maxHeight = rectangle.Height;
-                        if (i == perLineCount)
-                        {
-                            toTop = maxHeight + 2;
-                            toLeft = 10;
-                        }
+                        
+                        //if (maxHeight < rectangle.Height)
+                        //    maxHeight = rectangle.Height;
+                        //if (i == perLineCount)
+                        //{
+                        //    toTop = maxHeight + 2;
+                        //    toLeft = 10;
+                        //}
                         toLeft += rectangle.Width;
                     }
 
 
-                    //AddWaveEffectGraphics(width, height, image);
+                    AddWaveEffectGraphics(width, height, image);
                     using (var stream = new MemoryStream())
                     {
 
@@ -74,6 +71,7 @@ namespace Zoo.CaptchaCore
                 }
             }
         }
+
 
         private void AddWaveEffectGraphics(int width, int height, Bitmap pic)
         {

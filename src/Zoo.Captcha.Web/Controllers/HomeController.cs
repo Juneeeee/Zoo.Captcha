@@ -30,7 +30,15 @@ namespace Zoo.Captcha.Web.Controllers
         }
         public IActionResult CreateToken()
         {
-            var captcha = _captchaService.CreateCaptcha(216, 96, 7, 10);
+            var captcha = _captchaService.CreateCaptcha(new CaptchaOptions()
+            {
+                ImgWidth = 216,
+                ImgHeight = 96,
+                MinCharsLength = 5,
+                MaxCharsLength = 10,
+                BackgroundColor = "#fff",
+                FontColor = "#337ab7"
+            });
             return Json(captcha.Id);
         }
 

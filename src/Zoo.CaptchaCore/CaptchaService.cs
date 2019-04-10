@@ -2,7 +2,7 @@
 
 namespace Zoo.CaptchaCore
 {
-    public class CaptchaService: ICaptchaService
+    public class CaptchaService : ICaptchaService
     {
         private readonly ICaptchaStore _captchaStore;
         private readonly IGraphicsProvider _graphicsStrategy;
@@ -16,23 +16,22 @@ namespace Zoo.CaptchaCore
             _randomProvider = randomProvider;
         }
 
-        public Captcha CreateCaptcha(int imgWidth, int imgHeight, int minCharsLength, int maxCharsLength)
+        public Captcha CreateCaptcha(CaptchaOptions options)
         {
-            if (imgWidth < 0)
+            if (options.ImgWidth < 0)
                 throw new ArgumentException("图片绘制宽度不能小于0");
-            if (imgHeight < 0)
+            if (options.ImgHeight < 0)
                 throw new ArgumentException("图片绘制高度不能小于0");
-            if (minCharsLength < 1 || minCharsLength > 10)
+            if (options.MinCharsLength < 1 || options.MinCharsLength > 10)
                 throw new ArgumentException("随机最少字符长度范围为[1~10]之间");
-            if (maxCharsLength < 1 || maxCharsLength > 10)
+            if (options.MaxCharsLength < 1 || options.MaxCharsLength > 10)
                 throw new ArgumentException("随机最多字符长度范围为[1~10]之间");
-            if (maxCharsLength < minCharsLength)
+            if (options.MaxCharsLength < options.MinCharsLength)
                 throw new ArgumentException("随机最多字符长度不能少于最少字符长度");
 
-
-            var length = _randomProvider.ToNumber(minCharsLength, maxCharsLength);
+            var length = _randomProvider.ToNumber(options.MinCharsLength, options.MaxCharsLength);
             var code = _randomProvider.ToChars(length);
-            var captcha = _graphicsStrategy.Drawing(code, imgWidth, imgHeight);
+            var captcha = _graphicsStrategy.Drawing(code, options.ImgWidth, options.ImgHeight, length, options.FontColor, options.BackgroundColor);
 
             //存储验证码 
             _captchaStore.Add(captcha);
