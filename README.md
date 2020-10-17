@@ -1,4 +1,5 @@
-# Zoo.Captcha
+# Captcha-creator
+
 此项目为实现更安全、更简洁的验证码功能
 
 
